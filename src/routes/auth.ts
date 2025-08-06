@@ -2,6 +2,8 @@ import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/User";
+import { verifyToken } from "../middleware/auth";
+import type { Request, Response } from "express";
 
 const router = express.Router();
 
@@ -65,6 +67,20 @@ router.post("/login", async (req, res) => {
     });
   } catch (err) {
     console.error("Login error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// Get current user info
+router.get("/me", verifyToken, async (req: Request, res: Response) => {
+  try {
+    const userId = (req as any).userId;
+    const user = await User.findById(userId).select("-password");
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.status(200).json(user);
+  } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
 });
