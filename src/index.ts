@@ -35,6 +35,7 @@ app.get("/", (_req, res) => res.send("Flashly backend is running!"));
 async function start() {
   try {
     await connectDB();
+    console.log("PORT env is:", process.env.PORT);
     app.listen(PORT, "0.0.0.0", () => {
       console.log(`🚀 API listening on port ${PORT}`);
     });
