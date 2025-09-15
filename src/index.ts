@@ -18,6 +18,7 @@ const PORT = Number(process.env.PORT) || 4000;
  */
 const allowedOrigins: (string | RegExp)[] = [
   "https://flashly-iota.vercel.app",
+  "capacitor://localhost",
   "http://localhost:5173",
   // /^https:\/\/.*\.vercel\.app$/, // ← uncomment to allow *all* vercel.app previews
 ];
